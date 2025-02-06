@@ -1,0 +1,15 @@
+with CTE
+as
+(
+    select student_id, student_name, subject_name
+    from Students s
+    cross join Subjects sub
+)
+
+select ss.student_id, ss.student_name, ss.subject_name, count(e.subject_name) as attended_exams
+from CTE ss
+left join Examinations e
+on ss.student_id = e.student_id and ss.subject_name = e.subject_name
+group by ss.student_id, ss.student_name, ss.subject_name
+order by ss.student_id, ss.student_name, ss.subject_name
+
