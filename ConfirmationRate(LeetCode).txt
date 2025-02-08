@@ -1,0 +1,22 @@
+WITH Deno (user_id, Denominator) AS 
+(
+    SELECT S.user_id, COUNT([action]) AS Numerator
+    FROM Signups AS S
+    FULL OUTER JOIN Confirmations AS C
+    ON S.user_id = C.user_id
+    GROUP BY S.user_id
+),
+Num (user_id, Numerator) AS 
+(
+    SELECT S.user_id, COUNT([action]) AS Denominator
+    FROM Signups AS S
+    FULL OUTER JOIN Confirmations AS C
+    ON S.user_id = C.user_id
+    WHERE [action] = 'confirmed'
+    GROUP BY S.user_id
+)
+
+SELECT COALESCE(D.user_id, N.user_id) AS user_id,  COALESCE(ROUND(CAST(N.Numerator AS DECIMAL(10,2)) / NULLIF(CAST(D.Denominator AS DECIMAL(10,2)), 0), 2), 0) AS confirmation_rate  
+FROM Num AS N
+FULL OUTER JOIN Deno AS D
+ON N.user_id = D.user_id;
