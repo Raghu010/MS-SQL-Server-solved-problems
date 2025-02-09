@@ -1,0 +1,7 @@
+select P.product_id, coalesce(round(cast(sum(units * price) as decimal(10, 2))/cast(sum(units) as decimal(10, 2)), 2), 0) as average_price
+from Prices as P
+left outer join UnitsSold as U
+on P.product_id = U.product_id
+where (U.purchase_date between [start_date] and [end_date] OR U.purchase_date IS NULL)
+group by P.product_id
+
