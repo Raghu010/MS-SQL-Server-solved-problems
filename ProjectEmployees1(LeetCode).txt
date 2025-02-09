@@ -1,0 +1,5 @@
+select project_id, round(sum(cast(experience_years as decimal(10, 2)))/count(cast(experience_years as decimal(10, 2))), 2) as average_years
+from Project as P
+inner join Employee as E
+on P.employee_id = E.employee_id
+group by project_id
