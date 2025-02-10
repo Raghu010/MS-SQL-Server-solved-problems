@@ -1,0 +1,6 @@
+select contest_id, round(cast(count(R.user_id) as decimal(10, 2))/cast((select count(*) from Users) as decimal(10, 2)) * 100 , 2) as [percentage]
+from Users as U
+inner join Register as R
+on U.user_id = R.user_id
+group by contest_id
+order by [percentage] desc, contest_id asc;
