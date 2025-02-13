@@ -1,0 +1,21 @@
+with NumeratorCTE(id_customer)
+as
+(
+    select distinct customer_id
+    from delivery
+    group by customer_id
+    having min(order_date) = min(customer_pref_delivery_date)
+),
+DenominatorCTE(ID)
+as
+(
+    select distinct customer_id
+    from delivery
+)
+
+SELECT 
+    round(((SELECT COUNT(*) FROM NumeratorCTE) * 1.0 / (SELECT COUNT(*) FROM DenominatorCTE) *100), 2) AS immediate_percentage;
+
+
+
+
