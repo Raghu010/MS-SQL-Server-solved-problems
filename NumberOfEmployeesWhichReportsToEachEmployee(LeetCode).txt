@@ -1,0 +1,7 @@
+select E.employee_id, E.[name], count(E.employee_id) as reports_count, 
+round(sum(cast(M.age as decimal(10, 2)))/count(*), 0) as average_age
+from Employees as E
+inner join Employees as M
+on E.employee_id = M.reports_to
+group by E.employee_id, E.[name]
+order by E.employee_id asc
