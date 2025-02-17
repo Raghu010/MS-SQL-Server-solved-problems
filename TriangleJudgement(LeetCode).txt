@@ -1,0 +1,20 @@
+with CTE
+as
+(
+    select x, y, z,
+    case
+        when x >= y and x >= z then x
+        when y >= x and y >= z then y
+        when z >= x and z >= y then z
+    end as MaxValue
+    from Triangle 
+)
+
+select x, y, z,
+    case
+        when (x + y + z) - (MaxValue) > MaxValue then 'Yes'
+        else 'No'
+    end as triangle
+from CTE
+
+    
