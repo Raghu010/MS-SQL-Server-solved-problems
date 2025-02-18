@@ -1,0 +1,26 @@
+With CTE
+as
+(
+    select *,
+    case
+        when income < 20000 then 'Low Salary'
+        when income >= 20000 and income <= 50000 then 'Average Salary'
+        when income > 50000 then 'High Salary'
+    end as category
+    from Accounts
+),
+Categories
+as
+(
+    select 'Low Salary' as category
+    union all
+    select 'Average Salary'
+    union all
+    select 'High Salary'
+)
+
+select c.category, count(a.account_id) as accounts_count
+from Categories as c
+Left join CTE as a
+on c.category = a.category
+group by c.category
