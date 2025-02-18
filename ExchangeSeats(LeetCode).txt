@@ -1,0 +1,11 @@
+select id,
+case 
+    when id % 2 = 0 then Lag(student) over (order by id)
+    when id % 2 <> 0 then coalesce(Lead(student) over (order by id), student)
+end as student
+from Seat
+
+
+
+
+
