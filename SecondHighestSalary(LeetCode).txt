@@ -1,0 +1,11 @@
+with CTE
+as
+(
+    select distinct top (2)  salary 
+    from Employee
+    order by salary desc
+)
+
+select top(1) salary as SecondHighestSalary
+from CTE
+order by salary asc
