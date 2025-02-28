@@ -1,0 +1,6 @@
+select *
+from Users
+where 
+Left(mail, 1) like '[A-Za-z]%' 
+and Left(mail, Len(mail) - 13) not like '%[^A-Za-z0-9._-]%' 
+and right(mail, 13) = '@leetcode.com'
