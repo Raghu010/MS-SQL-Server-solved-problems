@@ -1,11 +1,13 @@
-with CTE
-as
-(
-    select distinct top (2)  salary 
-    from Employee
-    order by salary desc
+WITH CTE AS (
+    SELECT DISTINCT TOP (2) salary 
+    FROM Employee
+    WHERE salary IS NOT NULL
+    ORDER BY salary DESC
 )
 
-select top(1) salary as SecondHighestSalary
-from CTE
-order by salary asc
+SELECT 
+    CASE 
+        WHEN COUNT(*) < 2 THEN NULL
+        ELSE MIN(salary)
+    END AS SecondHighestSalary
+FROM CTE;
